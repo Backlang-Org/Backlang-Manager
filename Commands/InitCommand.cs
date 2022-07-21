@@ -11,7 +11,7 @@ public class InitCommand : ICommand
     public bool InstallExtension { get; set; }
     public void Execute()
     {
-        new TemplatesCommand().Execute();
+        new UpdateTemplatesCommand().Execute();
         new UpdateSdkCommand().Execute();
 
         if(InstallExtension)

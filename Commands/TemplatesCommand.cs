@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace Dotnet_Tool.Commands;
 
 [Verb("update-templates", HelpText = "Update The Backlang Templates")]
-public class TemplatesCommand : ICommand
+public class UpdateTemplatesCommand : ICommand
 {
     public void Execute()
     {
