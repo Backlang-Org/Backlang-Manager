@@ -4,15 +4,18 @@ namespace Dotnet_Tool.Core;
 
 public static class Utils
 {
-    public static void RunShellCommand(string command)
+    public static string RunShellCommand(string command)
     {
         var spl = command.Split(' ');
 
-        Process.Start(new ProcessStartInfo
+        var process = Process.Start(new ProcessStartInfo
         {
-            UseShellExecute = true,
+            UseShellExecute = false,
             FileName = spl[0],
+            RedirectStandardOutput = true,
             Arguments = command[(spl[0].Length + 1)..]
         });
+
+        return process.StandardOutput.ReadToEnd();
     }
 }

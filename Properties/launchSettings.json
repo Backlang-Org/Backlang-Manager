@@ -2,7 +2,7 @@
   "profiles": {
     "Dotnet-Tool": {
       "commandName": "Project",
-      "commandLineArgs": "update-templates"
+      "commandLineArgs": "update-sdk"
     }
   }
 }

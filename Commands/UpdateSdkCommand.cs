@@ -23,7 +23,7 @@ public class UpdateSdkCommand : ICommand
         DownloadPackage(cache, resource, latestVersion);
     }
 
-    private async void DownloadPackage(SourceCacheContext cache, FindPackageByIdResource resource, NuGetVersion version)
+    private static void DownloadPackage(SourceCacheContext cache, FindPackageByIdResource resource, NuGetVersion version)
     {
         using MemoryStream packageStream = new MemoryStream();
 
@@ -37,14 +37,23 @@ public class UpdateSdkCommand : ICommand
 
         Console.WriteLine($"Downloaded SDK {version}");
 
-        using PackageArchiveReader packageReader = new PackageArchiveReader(packageStream);
+        Console.WriteLine("Determine .Net Version");
+        var sdkVersions = Utils.RunShellCommand("dotnet --list-sdks")
+            .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Select(_=> _[.._.IndexOf(' ')]);
 
         var programsPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-        var dotnetSdkPath = Path.Combine(programsPath, @"dotnet\sdk\", "Sdks");
+        var dotnetSdkPath = Path.Combine(programsPath, @"dotnet\sdk\", sdkVersions.Last(), "Sdks");
 
-        
+        Console.WriteLine("Extract Sdk");
+        using var archive = new ZipArchive(packageStream, ZipArchiveMode.Read);
+
+        string sdkPath = Path.Combine(dotnetSdkPath, "Backlang.NET.Sdk");
+
+        archive.ExtractToDirectory(sdkPath, true);
+
+        Console.WriteLine("SDK installed");
     }
-
     private static NuGetVersion GetLatestVersion(SourceCacheContext cache, FindPackageByIdResource resource)
     {
         return resource.GetAllVersionsAsync(
