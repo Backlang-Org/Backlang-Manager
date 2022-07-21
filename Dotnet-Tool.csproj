@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<Version>1.0.1</Version>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>Dotnet_Tool</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<PackAsTool>true</PackAsTool>
+	<ToolCommandName>backlang</ToolCommandName>
+	<PackageOutputPath>./nupkg</PackageOutputPath>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<AssemblyName>Backlang-Manager</AssemblyName>
+	<Authors>Backlang-Org</Authors>
+	<Description>An dotnet tool to install/update the backlang sdk and templates</Description>
+	<PackageProjectUrl>https://www.backlang.org</PackageProjectUrl>
+	<PackageIcon>logo.png</PackageIcon>
+	<RepositoryUrl>https://github.com/Backlang-Org/Backlang-Manager</RepositoryUrl>
+	<PackageTags>backlang, dotnet, tool</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="nupkg\**" />
+    <EmbeddedResource Remove="nupkg\**" />
+    <None Remove="nupkg\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="logo.png" Pack="true" PackagePath="\">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
+    <PackageReference Include="NuGet.Protocol" Version="6.2.1" />
+  </ItemGroup>
+
+</Project>

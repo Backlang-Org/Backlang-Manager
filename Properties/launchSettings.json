@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Dotnet-Tool": {
+      "commandName": "Project",
+      "commandLineArgs": "update-templates"
+    }
+  }
+}
