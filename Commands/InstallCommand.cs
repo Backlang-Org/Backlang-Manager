@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace Dotnet_Tool.Commands;
 
 [Verb("install", HelpText = "install sdk/templates")]
-public class InitCommand : ICommand
+public class InstallCommand : ICommand
 {
     [Option("with-extension")]
     public bool InstallExtension { get; set; }
@@ -14,7 +14,7 @@ public class InitCommand : ICommand
         new UpdateTemplatesCommand().Execute();
         new UpdateSdkCommand().Execute();
 
-        if(InstallExtension)
+        if (InstallExtension)
         {
             new InstallVsCodeExtensionCommand().Execute();
         }

@@ -9,7 +9,7 @@ public class Program
     static void Main(string[] args)
     {
         Parser.Default
-                .ParseArguments<UpdateSdkCommand, UpdateTemplatesCommand, InitCommand>(args)
+                .ParseArguments<UpdateSdkCommand, UpdateTemplatesCommand, InstallCommand>(args)
                 .WithParsed<ICommand>(t => t.Execute())
                 .WithNotParsed( PrintError);
     }
