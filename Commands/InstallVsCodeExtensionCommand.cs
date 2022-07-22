@@ -8,6 +8,6 @@ public class InstallVsCodeExtensionCommand : ICommand
 {
     public void Execute()
     {
-        
+        Utils.RunShellCommand("code --install-extension furesoft.back --force");
     }
 }
