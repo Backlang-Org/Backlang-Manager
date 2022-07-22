@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace Dotnet_Tool.Commands;
 
-[Verb("init", HelpText = "Init first installation of sdk/templates")]
+[Verb("install", HelpText = "install sdk/templates")]
 public class InitCommand : ICommand
 {
     [Option("with-extension")]
