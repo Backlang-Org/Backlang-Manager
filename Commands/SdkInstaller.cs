@@ -20,6 +20,20 @@ public static class SdkInstaller
         DownloadAndInstallPackage(cache, resource, latestVersion, sdkId);
     }
 
+    public static void Uninstall(string sdkId)
+    {
+        var sdkVersions = GetDotnetSdkVersions();
+
+        var programsPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+        var dotnetSdkPath = Path.Combine(programsPath, @"dotnet\sdk\", sdkVersions.Last(), "Sdks");
+
+        Console.WriteLine("Remove SDK");
+
+        string sdkPath = Path.Combine(dotnetSdkPath, sdkId);
+
+        Utils.DeleteDirectory(sdkPath);
+    }
+
     private static void DownloadAndInstallPackage(SourceCacheContext cache, FindPackageByIdResource resource, NuGetVersion version, string sdkId)
     {
         using MemoryStream packageStream = new MemoryStream();
@@ -33,11 +47,7 @@ public static class SdkInstaller
             CancellationToken.None).Wait();
 
         Console.WriteLine($"Downloaded SDK {version}");
-
-        Console.WriteLine("Determine .Net Version");
-        var sdkVersions = Utils.RunShellCommand("dotnet --list-sdks")
-            .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-            .Select(_ => _[.._.IndexOf(' ')]);
+        var sdkVersions = GetDotnetSdkVersions();
 
         var programsPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
         var dotnetSdkPath = Path.Combine(programsPath, @"dotnet\sdk\", sdkVersions.Last(), "Sdks");
@@ -51,6 +61,16 @@ public static class SdkInstaller
 
         Console.WriteLine("SDK installed");
     }
+
+    private static IEnumerable<string> GetDotnetSdkVersions()
+    {
+        Console.WriteLine("Determine .Net Version");
+        var sdkVersions = Utils.RunShellCommand("dotnet --list-sdks")
+            .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Select(_ => _[.._.IndexOf(' ')]);
+        return sdkVersions;
+    }
+
     private static NuGetVersion GetLatestVersion(SourceCacheContext cache, FindPackageByIdResource resource, string sdkId)
     {
         return resource.GetAllVersionsAsync(

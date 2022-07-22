@@ -10,12 +10,12 @@ public class UnInstallCommand : ICommand
     public bool UninstallExtension { get; set; }
     public void Execute()
     {
-        new UpdateTemplatesCommand().Execute();
-        new UpdateSdkCommand().Execute();
+        new UpdateTemplatesCommand { ShouldUninstall = true }.Execute();
+        new UpdateSdkCommand { ShouldUninstall = true }.Execute();
 
         if (UninstallExtension)
         {
-            new InstallVsCodeExtensionCommand().Execute();
+            new InstallVsCodeExtensionCommand { ShouldUninstall = true }.Execute();
         }
     }
 }

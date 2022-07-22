@@ -1,6 +1,5 @@
 ﻿using CommandLine;
 using Dotnet_Tool.Core;
-using System.Diagnostics;
 
 namespace Dotnet_Tool.Commands;
 
