@@ -6,12 +6,13 @@ namespace Dotnet_Tool;
 
 public class Program
 {
-    static void Main(string[] args)
+    //ToDo: Add Loading Plugins From Nuget
+    public static void Main(string[] args)
     {
         Parser.Default
                 .ParseArguments<UpdateSdkCommand, UpdateTemplatesCommand, InstallCommand>(args)
                 .WithParsed<ICommand>(t => t.Execute())
-                .WithNotParsed( PrintError);
+                .WithNotParsed(PrintError);
 
         Console.ReadLine();
     }

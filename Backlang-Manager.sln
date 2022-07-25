@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dotnet-Tool", "Dotnet-Tool.csproj", "{CD2DD511-5191-4B4A-8471-DA4C561C8B2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backlang-Manager", "Backlang-Manager.csproj", "{CD2DD511-5191-4B4A-8471-DA4C561C8B2A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Projektmappenelemente", "{917DF66D-8126-4B99-B45F-536936FFD9AB}"
 	ProjectSection(SolutionItems) = preProject
