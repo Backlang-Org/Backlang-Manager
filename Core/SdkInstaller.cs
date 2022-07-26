@@ -1,11 +1,11 @@
-﻿using Dotnet_Tool.Core;
-using NuGet.Common;
+﻿using NuGet.Common;
 using NuGet.Protocol;
 using NuGet.Protocol.Core.Types;
 using NuGet.Versioning;
 using System.IO.Compression;
+using System.Runtime.InteropServices;
 
-namespace Dotnet_Tool.Commands;
+namespace Dotnet_Tool.Core;
 
 public static class SdkInstaller
 {
@@ -66,7 +66,19 @@ public static class SdkInstaller
 
         string sdkPath = Path.Combine(dotnetSdkPath, sdkId);
 
-        archive.ExtractToDirectory(sdkPath, true);
+        var tmpPath = Path.Combine(Path.GetTempPath(), sdkId);
+
+        archive.ExtractToDirectory(tmpPath, true);
+
+        //ToDo: add run command for all os's
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            Utils.RunAdminCommand($"Xcopy {tmpPath} \"{sdkPath}\" /E /H /C /I /F");
+        }
+        else
+        {
+            Utils.RunAdminCommand($"cp -r -f {tmpPath} \"{sdkPath}\"", "/bin/bash");
+        }
 
         Console.WriteLine("SDK installed");
     }

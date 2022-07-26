@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace Dotnet_Tool.Core;
 
@@ -17,6 +18,22 @@ public static class Utils
         });
 
         return process.StandardOutput.ReadToEnd();
+    }
+
+    public static void RunAdminCommand(string command, string app = "cmd")
+    {
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            command = "/c " + command;
+        }
+
+        Process.Start(new ProcessStartInfo
+        {
+            UseShellExecute = true,
+            FileName = app,
+            Verb = "runas",
+            Arguments = command
+        });
     }
 
     public static void DeleteDirectory(string target_dir)

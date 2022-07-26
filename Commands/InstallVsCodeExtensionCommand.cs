@@ -8,15 +8,16 @@ public class InstallVsCodeExtensionCommand : ICommand
 {
     [Option('u', "uninstall", HelpText = "Uninstall the vscode extension")]
     public bool ShouldUninstall { get; set; }
+
     public void Execute()
     {
-        if(ShouldUninstall)
+        if (ShouldUninstall)
         {
-            Utils.RunShellCommand("code --uninstall-extension furesoft.back --force");
+            Console.Write(Utils.RunShellCommand("code --uninstall-extension furesoft.back --force"));
 
             return;
         }
 
-        Utils.RunShellCommand("code --install-extension furesoft.back --force");
+        Console.Write(Utils.RunShellCommand("code --install-extension furesoft.back --force"));
     }
 }

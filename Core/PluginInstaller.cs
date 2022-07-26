@@ -3,7 +3,7 @@ using NuGet.Protocol;
 using NuGet.Protocol.Core.Types;
 using System.IO.Compression;
 
-namespace Dotnet_Tool.Commands;
+namespace Dotnet_Tool.Core;
 
 public static class PluginInstaller
 {

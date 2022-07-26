@@ -12,8 +12,6 @@ public class Program
                 .ParseArguments<UpdateSdkCommand, UpdateTemplatesCommand, InstallCommand, PluginsCommand>(args)
                 .WithParsed<ICommand>(t => t.Execute())
                 .WithNotParsed(PrintError);
-
-        Console.ReadLine();
     }
 
     private static void PrintError(IEnumerable<Error> errors)

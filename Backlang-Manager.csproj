@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<Version>1.0.6</Version>
+	<Version>1.0.8</Version>
     <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>Dotnet_Tool</RootNamespace>
@@ -9,7 +9,6 @@
     <Nullable>enable</Nullable>
 	<PackAsTool>true</PackAsTool>
 	<ToolCommandName>backlang</ToolCommandName>
-	<PackageOutputPath>./nupkg</PackageOutputPath>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<AssemblyName>Backlang-Manager</AssemblyName>
 	<Authors>Backlang-Org</Authors>
@@ -18,7 +17,6 @@
 	<PackageIcon>logo.png</PackageIcon>
 	<RepositoryUrl>https://github.com/Backlang-Org/Backlang-Manager</RepositoryUrl>
 	<PackageTags>backlang, dotnet, tool</PackageTags>
-	<ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
