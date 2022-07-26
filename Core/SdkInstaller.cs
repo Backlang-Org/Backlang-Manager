@@ -11,6 +11,8 @@ public static class SdkInstaller
 {
     public static async void Install(string sdkId)
     {
+        Console.WriteLine("Install SDK");
+
         var cache = new SourceCacheContext();
         SourceRepository repository = Repository.Factory.GetCoreV3("https://api.nuget.org/v3/index.json");
         FindPackageByIdResource resource = await repository.GetResourceAsync<FindPackageByIdResource>();
@@ -70,14 +72,13 @@ public static class SdkInstaller
 
         archive.ExtractToDirectory(tmpPath, true);
 
-        //ToDo: add run command for all os's
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
-            Utils.RunAdminCommand($"Xcopy {tmpPath} \"{sdkPath}\" /E /H /C /I /F");
+            Utils.RunWindowsAdminCommand($"Xcopy {tmpPath} \"{sdkPath}\" /E /H /C /I /F");
         }
         else
         {
-            Utils.RunAdminCommand($"cp -r -f {tmpPath} \"{sdkPath}\"", "/bin/bash");
+            new DirectoryInfo(tmpPath).MoveTo(sdkPath);
         }
 
         Console.WriteLine("SDK installed");

@@ -20,22 +20,19 @@ public static class Utils
         return process.StandardOutput.ReadToEnd();
     }
 
-    public static void RunAdminCommand(string command, string app = "cmd")
+    public static void RunWindowsAdminCommand(string command)
     {
-        ProcessStartInfo startInfo = new ProcessStartInfo
-        {
-            FileName = app,
-            Arguments = command
-        };
-
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+
             startInfo.Arguments = "/c " + command;
             startInfo.Verb = "runas";
             startInfo.UseShellExecute = true;
-        }
+            startInfo.FileName = "cmd";
 
-        Process.Start(startInfo);
+            Process.Start(startInfo);
+        }
     }
 
     public static void DeleteDirectory(string target_dir)
