@@ -60,8 +60,17 @@ public static class SdkInstaller
         Console.WriteLine($"Downloaded SDK {version}");
         var sdkVersions = GetDotnetSdkVersions();
 
-        var programsPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-        var dotnetSdkPath = Path.Combine(programsPath, @"dotnet\sdk\", sdkVersions.Last(), "Sdks");
+        string programsPath = null;
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            programsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "dotnet");
+        }
+        else
+        {
+            programsPath = "~/.dotnet";
+        }
+
+        var dotnetSdkPath = Path.Combine(programsPath, "sdk", sdkVersions.Last(), "Sdks");
 
         Console.WriteLine("Extract Sdk");
         using var archive = new ZipArchive(packageStream, ZipArchiveMode.Read);

@@ -2,7 +2,13 @@
   "profiles": {
     "Dotnet-Tool": {
       "commandName": "Project",
-      "commandLineArgs": "plugins -a"
+      "commandLineArgs": "install",
+      "remoteDebugEnabled": false
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "environmentVariables": {},
+      "distributionName": ""
     }
   }
 }
