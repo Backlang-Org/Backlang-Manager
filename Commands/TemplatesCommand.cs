@@ -13,11 +13,11 @@ public class UpdateTemplatesCommand : ICommand
     {
         if (ShouldUninstall)
         {
-            Console.Write(Utils.RunShellCommand("dotnet new --uninstall Backlang.Templates"));
+            Console.Write(Utils.RunShellCommand("dotnet new uninstall Backlang.Templates"));
 
             return;
         }
 
-        Console.Write(Utils.RunShellCommand("dotnet new --install Backlang.Templates"));
+        Console.Write(Utils.RunShellCommand("dotnet new install Backlang.Templates"));
     }
 }

@@ -24,7 +24,6 @@ public static class Utils
     {
         ProcessStartInfo startInfo = new ProcessStartInfo
         {
-            UseShellExecute = true,
             FileName = app,
             Arguments = command
         };
@@ -33,6 +32,7 @@ public static class Utils
         {
             startInfo.Arguments = "/c " + command;
             startInfo.Verb = "runas";
+            startInfo.UseShellExecute = true;
         }
 
         Process.Start(startInfo);
