@@ -60,17 +60,17 @@ public static class SdkInstaller
         Console.WriteLine($"Downloaded SDK {version}");
         var sdkVersions = GetDotnetSdkVersions();
 
-        string programsPath = null;
+        string dotnetPath = null;
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
-            programsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "dotnet");
+            dotnetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "dotnet");
         }
         else
         {
-            programsPath = "~/.dotnet";
+            dotnetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "dotnet");
         }
 
-        var dotnetSdkPath = Path.Combine(programsPath, "sdk", sdkVersions.Last(), "Sdks");
+        var dotnetSdkPath = Path.Combine(dotnetPath, "sdk", sdkVersions.Last(), "Sdks");
 
         Console.WriteLine("Extract Sdk");
         using var archive = new ZipArchive(packageStream, ZipArchiveMode.Read);
@@ -78,6 +78,10 @@ public static class SdkInstaller
         string sdkPath = Path.Combine(dotnetSdkPath, sdkId);
 
         var tmpPath = Path.Combine(Path.GetTempPath(), sdkId);
+        var di = new DirectoryInfo(tmpPath);
+
+        if (!di.Exists) di.Create();
+        else { Utils.DeleteDirectory(tmpPath); di.Create(); }
 
         archive.ExtractToDirectory(tmpPath, true);
 
@@ -87,7 +91,10 @@ public static class SdkInstaller
         }
         else
         {
-            new DirectoryInfo(tmpPath).MoveTo(sdkPath);
+            if (di.Exists)
+            {
+                Utils.CopyFolder(tmpPath, sdkPath);
+            }
         }
 
         Console.WriteLine("SDK installed");
