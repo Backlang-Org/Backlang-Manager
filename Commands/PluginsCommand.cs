@@ -39,7 +39,6 @@ namespace Dotnet_Tool.Commands
                 PluginInstaller.Install(InstallPackageName);
             }
 
-            Environment.Exit(0);
         }
     }
 }

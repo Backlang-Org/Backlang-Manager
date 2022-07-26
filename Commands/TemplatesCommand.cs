@@ -11,7 +11,7 @@ public class UpdateTemplatesCommand : ICommand
 
     public void Execute()
     {
-        if(ShouldUninstall)
+        if (ShouldUninstall)
         {
             Utils.RunShellCommand("dotnet new --uninstall Backlang.Templates");
 
