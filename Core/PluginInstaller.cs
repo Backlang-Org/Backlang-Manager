@@ -15,8 +15,8 @@ public static class PluginInstaller
         var searchFilter = new SearchFilter(includePrerelease: false);
 
         var result =
-            await resource.SearchAsync("backlang", searchFilter,
-            0, 20, NullLogger.Instance, CancellationToken.None);
+             resource.SearchAsync("backlang", searchFilter,
+            0, 20, NullLogger.Instance, CancellationToken.None).Result;
 
         result = result.Where(_ => _.Tags.Contains("backend") || _.Tags.Contains("plugin"));
 

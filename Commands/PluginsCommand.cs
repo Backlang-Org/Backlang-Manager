@@ -27,18 +27,24 @@ namespace Dotnet_Tool.Commands
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 "Backlang", "Plugins");
 
-                Console.WriteLine("All Installed Plugins:");
-
-                foreach (var file in Directory.GetFiles(pluginsDir, "*.dll"))
+                if (Directory.Exists(pluginsDir))
                 {
-                    Console.WriteLine("\t" + Path.GetFileNameWithoutExtension(file));
+                    Console.WriteLine("All Installed Plugins:");
+
+                    foreach (var file in Directory.GetFiles(pluginsDir, "*.dll"))
+                    {
+                        Console.WriteLine("\t" + Path.GetFileNameWithoutExtension(file));
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No Plugins Installed");
                 }
             }
             else if (!string.IsNullOrEmpty(InstallPackageName))
             {
                 PluginInstaller.Install(InstallPackageName);
             }
-
         }
     }
 }

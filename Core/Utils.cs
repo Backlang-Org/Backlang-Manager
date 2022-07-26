@@ -22,18 +22,20 @@ public static class Utils
 
     public static void RunAdminCommand(string command, string app = "cmd")
     {
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            command = "/c " + command;
-        }
-
-        Process.Start(new ProcessStartInfo
+        ProcessStartInfo startInfo = new ProcessStartInfo
         {
             UseShellExecute = true,
             FileName = app,
-            Verb = "runas",
             Arguments = command
-        });
+        };
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            startInfo.Arguments = "/c " + command;
+            startInfo.Verb = "runas";
+        }
+
+        Process.Start(startInfo);
     }
 
     public static void DeleteDirectory(string target_dir)
