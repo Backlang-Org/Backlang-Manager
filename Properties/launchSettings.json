@@ -2,7 +2,7 @@
   "profiles": {
     "Dotnet-Tool": {
       "commandName": "Project",
-      "commandLineArgs": "help install"
+      "commandLineArgs": "plugins -l"
     }
   }
 }

@@ -34,6 +34,15 @@ public static class SdkInstaller
         Utils.DeleteDirectory(sdkPath);
     }
 
+    public static NuGetVersion GetLatestVersion(SourceCacheContext cache, FindPackageByIdResource resource, string sdkId)
+    {
+        return resource.GetAllVersionsAsync(
+                    sdkId,
+                    cache,
+                    NullLogger.Instance,
+                    CancellationToken.None).Result.Last();
+    }
+
     private static void DownloadAndInstallPackage(SourceCacheContext cache, FindPackageByIdResource resource, NuGetVersion version, string sdkId)
     {
         using MemoryStream packageStream = new MemoryStream();
@@ -69,14 +78,5 @@ public static class SdkInstaller
             .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .Select(_ => _[.._.IndexOf(' ')]);
         return sdkVersions;
-    }
-
-    private static NuGetVersion GetLatestVersion(SourceCacheContext cache, FindPackageByIdResource resource, string sdkId)
-    {
-        return resource.GetAllVersionsAsync(
-                    sdkId,
-                    cache,
-                    NullLogger.Instance,
-                    CancellationToken.None).Result.Last();
     }
 }
