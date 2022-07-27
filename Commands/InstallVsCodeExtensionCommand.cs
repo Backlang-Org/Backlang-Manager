@@ -1,7 +1,7 @@
-﻿using CommandLine;
-using Dotnet_Tool.Core;
+﻿using BacklangManager.Core;
+using CommandLine;
 
-namespace Dotnet_Tool.Commands;
+namespace BacklangManager.Commands;
 
 [Verb("vscode", HelpText = "Install VS Code Extension")]
 public class InstallVsCodeExtensionCommand : ICommand

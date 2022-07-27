@@ -1,7 +1,7 @@
-﻿using CommandLine;
-using Dotnet_Tool.Core;
+﻿using BacklangManager.Core;
+using CommandLine;
 
-namespace Dotnet_Tool.Commands;
+namespace BacklangManager.Commands;
 
 [Verb("update-sdk", HelpText = "Install/Update The Backlang SDK")]
 public class UpdateSdkCommand : ICommand
@@ -11,7 +11,7 @@ public class UpdateSdkCommand : ICommand
 
     public void Execute()
     {
-        if(ShouldUninstall)
+        if (ShouldUninstall)
         {
             SdkInstaller.Uninstall("Backlang.NET.Sdk");
 

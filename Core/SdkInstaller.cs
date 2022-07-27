@@ -2,20 +2,21 @@
 using NuGet.Protocol;
 using NuGet.Protocol.Core.Types;
 using NuGet.Versioning;
+using System.Diagnostics;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
 
-namespace Dotnet_Tool.Core;
+namespace BacklangManager.Core;
 
 public static class SdkInstaller
 {
-    public static async void Install(string sdkId)
+    public static void Install(string sdkId)
     {
         Console.WriteLine("Install SDK");
 
         var cache = new SourceCacheContext();
         SourceRepository repository = Repository.Factory.GetCoreV3("https://api.nuget.org/v3/index.json");
-        FindPackageByIdResource resource = await repository.GetResourceAsync<FindPackageByIdResource>();
+        FindPackageByIdResource resource = repository.GetResourceAsync<FindPackageByIdResource>().Result;
 
         var latestVersion = GetLatestVersion(cache, resource, sdkId);
 
@@ -45,7 +46,7 @@ public static class SdkInstaller
                     CancellationToken.None).Result.Last();
     }
 
-    private static void DownloadAndInstallPackage(SourceCacheContext cache, FindPackageByIdResource resource, NuGetVersion version, string sdkId)
+    private static async void DownloadAndInstallPackage(SourceCacheContext cache, FindPackageByIdResource resource, NuGetVersion version, string sdkId)
     {
         using MemoryStream packageStream = new MemoryStream();
 
@@ -67,7 +68,7 @@ public static class SdkInstaller
         }
         else
         {
-            dotnetPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "dotnet");
+            dotnetPath = "/usr/share/dotnet";
         }
 
         var dotnetSdkPath = Path.Combine(dotnetPath, "sdk", sdkVersions.Last(), "Sdks");
@@ -93,7 +94,12 @@ public static class SdkInstaller
         {
             if (di.Exists)
             {
-                Utils.CopyFolder(tmpPath, sdkPath);
+                var ps2 = new ProcessStartInfo();
+                ps2.FileName = "cp";
+                ps2.Arguments = $"-r {tmpPath} {sdkPath}";
+                ps2.Verb = "sudo";
+
+                Process.Start(ps2);
             }
         }
 

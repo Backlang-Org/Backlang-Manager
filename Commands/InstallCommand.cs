@@ -1,8 +1,9 @@
-﻿using CommandLine;
-using Dotnet_Tool.Core;
+﻿using BacklangManager.Core;
+using CommandLine;
+using Dotnet_Tool.Commands;
 using System.Diagnostics;
 
-namespace Dotnet_Tool.Commands;
+namespace BacklangManager.Commands;
 
 [Verb("install", HelpText = "install sdk/templates")]
 public class InstallCommand : ICommand

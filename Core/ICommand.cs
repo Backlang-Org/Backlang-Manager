@@ -1,4 +1,4 @@
-﻿namespace Dotnet_Tool.Core;
+﻿namespace BacklangManager.Core;
 
 public interface ICommand
 {

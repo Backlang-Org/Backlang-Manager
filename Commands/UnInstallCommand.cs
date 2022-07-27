@@ -1,7 +1,8 @@
-﻿using CommandLine;
-using Dotnet_Tool.Core;
+﻿using BacklangManager.Core;
+using CommandLine;
+using Dotnet_Tool.Commands;
 
-namespace Dotnet_Tool.Commands;
+namespace BacklangManager.Commands;
 
 [Verb("uninstall", HelpText = "uninstall sdk/templates")]
 public class UnInstallCommand : ICommand

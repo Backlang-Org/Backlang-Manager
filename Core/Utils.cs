@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace Dotnet_Tool.Core;
+namespace BacklangManager.Core;
 
 public static class Utils
 {
@@ -32,26 +32,6 @@ public static class Utils
             startInfo.FileName = "cmd";
 
             Process.Start(startInfo);
-        }
-    }
-
-    public static void CopyFolder(string sourceFolder, string destFolder)
-    {
-        if (!Directory.Exists(destFolder))
-            Directory.CreateDirectory(destFolder);
-        string[] files = Directory.GetFiles(sourceFolder);
-        foreach (string file in files)
-        {
-            string name = Path.GetFileName(file);
-            string dest = Path.Combine(destFolder, name);
-            File.Copy(file, dest);
-        }
-        string[] folders = Directory.GetDirectories(sourceFolder);
-        foreach (string folder in folders)
-        {
-            string name = Path.GetFileName(folder);
-            string dest = Path.Combine(destFolder, name);
-            CopyFolder(folder, dest);
         }
     }
 

@@ -1,17 +1,20 @@
-﻿using CommandLine;
-using Dotnet_Tool.Commands;
-using Dotnet_Tool.Core;
+﻿using BacklangManager.Commands;
+using BacklangManager.Core;
+using CommandLine;
 
-namespace Dotnet_Tool;
+namespace BacklangManager;
 
 public class Program
 {
     public static void Main(string[] args)
     {
+#if DEBUG
+        args = new[] { "update-sdk" };
+#endif
+
         Parser.Default
                 .ParseArguments<UpdateSdkCommand, UpdateTemplatesCommand, InstallCommand, PluginsCommand>(args)
-                .WithParsed<ICommand>(t => t.Execute())
-                .WithNotParsed(PrintError);
+                .WithParsed<ICommand>(t => t.Execute());
     }
 
     private static void PrintError(IEnumerable<Error> errors)
