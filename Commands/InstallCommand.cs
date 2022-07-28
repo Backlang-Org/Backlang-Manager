@@ -1,7 +1,5 @@
 ﻿using BacklangManager.Core;
 using CommandLine;
-using Dotnet_Tool.Commands;
-using System.Diagnostics;
 
 namespace BacklangManager.Commands;
 
@@ -10,6 +8,7 @@ public class InstallCommand : ICommand
 {
     [Option("with-extension")]
     public bool InstallExtension { get; set; }
+
     public void Execute()
     {
         new UpdateTemplatesCommand().Execute();
