@@ -2,7 +2,6 @@
 using NuGet.Protocol;
 using NuGet.Protocol.Core.Types;
 using NuGet.Versioning;
-using System.Diagnostics;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
 
@@ -46,7 +45,10 @@ public static class SdkInstaller
                     CancellationToken.None).Result.Last();
     }
 
-    private static async void DownloadAndInstallPackage(SourceCacheContext cache, FindPackageByIdResource resource, NuGetVersion version, string sdkId)
+    [DllImport("libc")]
+    public static extern void seteuid(uint id);
+
+    private static void DownloadAndInstallPackage(SourceCacheContext cache, FindPackageByIdResource resource, NuGetVersion version, string sdkId)
     {
         using MemoryStream packageStream = new MemoryStream();
 
@@ -94,12 +96,9 @@ public static class SdkInstaller
         {
             if (di.Exists)
             {
-                var ps2 = new ProcessStartInfo();
-                ps2.FileName = "cp";
-                ps2.Arguments = $"-r {tmpPath} {sdkPath}";
-                ps2.Verb = "sudo";
+                seteuid(0);
 
-                Process.Start(ps2);
+                Directory.Move(tmpPath, sdkPath);
             }
         }
 
