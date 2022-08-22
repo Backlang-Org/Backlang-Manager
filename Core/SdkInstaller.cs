@@ -96,9 +96,16 @@ public static class SdkInstaller
         {
             if (di.Exists)
             {
-                seteuid(0);
+                try
+                {
+                    seteuid(0);
 
-                Directory.Move(tmpPath, sdkPath);
+                    Utils.CopyFolder(tmpPath, sdkPath);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
 
