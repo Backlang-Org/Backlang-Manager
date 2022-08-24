@@ -1,5 +1,6 @@
 ﻿using BacklangManager.Core;
 using CommandLine;
+using System.Runtime.Loader;
 
 //ToDo: update plugins
 namespace BacklangManager.Commands;
@@ -34,7 +35,9 @@ public class PluginsCommand : ICommand
 
                 foreach (var file in Directory.GetFiles(pluginsDir, "*.dll"))
                 {
-                    Console.WriteLine("\t" + Path.GetFileNameWithoutExtension(file));
+                    var assLoadContext = AssemblyLoadContext.Default.LoadFromAssemblyPath(file);
+
+                    Console.WriteLine($"\t{Path.GetFileNameWithoutExtension(file)}\t{assLoadContext.GetName().Version}");
                 }
             }
             else
