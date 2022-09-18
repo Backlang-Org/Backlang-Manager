@@ -1,13 +1,14 @@
 ﻿using NuGet.Common;
 using NuGet.Protocol;
 using NuGet.Protocol.Core.Types;
+using NuGet.Versioning;
 using System.IO.Compression;
 
 namespace BacklangManager.Core;
 
 public static class PluginInstaller
 {
-    public static async void List()
+    public static async IAsyncEnumerable<(string Title, NuGetVersion Version)> GetAvailablePlugins()
     {
         var cache = new SourceCacheContext();
         var repository = Repository.Factory.GetCoreV3("https://api.nuget.org/v3/index.json");
@@ -22,7 +23,7 @@ public static class PluginInstaller
 
         foreach (var pck in result)
         {
-            Console.WriteLine(pck.Title + " " + pck.GetVersionsAsync().Result.Last().Version);
+            yield return (pck.Title, pck.GetVersionsAsync().Result.Last().Version);
         }
     }
 
@@ -60,7 +61,5 @@ public static class PluginInstaller
         {
             libItem.ExtractToFile(Path.Combine(pluginsDir, libItem.Name), true);
         }
-
-        Environment.Exit(0);
     }
 }

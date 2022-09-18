@@ -115,7 +115,7 @@ public static class SdkInstaller
     private static IEnumerable<string> GetDotnetSdkVersions()
     {
         Console.WriteLine("Determine .Net Version");
-        var sdkVersions = Utils.RunShellCommand("dotnet --list-sdks")
+        var sdkVersions = Utils.RunCommand("dotnet --list-sdks")
             .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .Select(_ => _[.._.IndexOf(' ')]);
         return sdkVersions;

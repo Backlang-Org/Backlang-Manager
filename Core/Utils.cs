@@ -5,7 +5,7 @@ namespace BacklangManager.Core;
 
 public static class Utils
 {
-    public static string RunShellCommand(string command)
+    public static string RunCommand(string command)
     {
         var spl = command.Split(' ');
 
@@ -18,6 +18,18 @@ public static class Utils
         });
 
         return process.StandardOutput.ReadToEnd();
+    }
+
+    public static void RunShellCommand(string command)
+    {
+        var spl = command.Split(' ');
+
+        var process = Process.Start(new ProcessStartInfo
+        {
+            UseShellExecute = true,
+            FileName = spl[0],
+            Arguments = command[(spl[0].Length + 1)..]
+        });
     }
 
     public static void RunWindowsAdminCommand(string command)
