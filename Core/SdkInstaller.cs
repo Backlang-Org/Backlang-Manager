@@ -90,7 +90,7 @@ public static class SdkInstaller
 
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
-            Utils.RunWindowsAdminCommand($"Xcopy {tmpPath} \"{sdkPath}\" /E /H /C /I /F");
+            Utils.RunWindowsAdminCommand($"Xcopy {tmpPath} \"{sdkPath}\" /E /H /C /I /F /Y");
         }
         else
         {
