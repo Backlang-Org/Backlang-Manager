@@ -13,7 +13,8 @@ public class InstallVsCodeExtensionCommand : ICommand
     {
         if (ShouldUninstall)
         {
-            Console.Write(Utils.RunShellCommand("code --uninstall-extension furesoft.back --force"));
+            Utils.RunWindowsAdminCommand("code --uninstall-extension furesoft.back --force");
+            Console.WriteLine();
 
             return;
         }
