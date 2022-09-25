@@ -13,6 +13,7 @@ public class ListAvailablePluginsCommand : IMenuCommand
         AnsiConsole.Status().Start("Loading Available Plugins", _ => {
             foreach (var plugin in PluginInstaller.GetAvailablePlugins().ToBlockingEnumerable())
             {
+                //ToDo: add [Installed] if plugin is already installed
                 menu.Items.Add(plugin.Title + " " + plugin.Version, new InstallPluginCommand(plugin.Title));
             }
         });

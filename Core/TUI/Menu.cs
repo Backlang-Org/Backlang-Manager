@@ -45,6 +45,8 @@ public class Menu
             prompt.AddChoice(item.Key);
         }
 
+        
+
         var selectedItem = AnsiConsole.Prompt(prompt);
 
         if (selectedItem == "..")
