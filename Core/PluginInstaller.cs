@@ -8,7 +8,12 @@ namespace BacklangManager.Core;
 
 public static class PluginInstaller
 {
-    public static async IAsyncEnumerable<(string Title, NuGetVersion Version)> GetAvailablePlugins()
+    public static IAsyncEnumerable<(string Title, NuGetVersion Version)> GetAvailablePlugins()
+    {
+        return Search("backlang");
+    }
+
+    public static async IAsyncEnumerable<(string Title, NuGetVersion Version)> Search(string term)
     {
         var cache = new SourceCacheContext();
         var repository = Repository.Factory.GetCoreV3("https://api.nuget.org/v3/index.json");
@@ -16,7 +21,7 @@ public static class PluginInstaller
         var searchFilter = new SearchFilter(includePrerelease: false);
 
         var result =
-             resource.SearchAsync("backlang", searchFilter,
+             resource.SearchAsync(term, searchFilter,
             0, 20, NullLogger.Instance, CancellationToken.None).Result;
 
         result = result.Where(_ => _.Tags.Contains("backend") || _.Tags.Contains("plugin"));
